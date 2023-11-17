@@ -56,6 +56,13 @@ export class AirlineService {
         BusinessError.NOT_FOUND,
       );
 
+    const currentDate = new Date();
+    if (airline.foundationDate >= currentDate)
+      throw new BusinessLogicException(
+        'The foundation date must be in the past',
+        BusinessError.BAD_REQUEST,
+      );
+
     return await this.airlineRepository.save({
       ...persistedAirline,
       ...airline,

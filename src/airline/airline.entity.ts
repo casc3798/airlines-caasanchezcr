@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { AirportEntity } from '../airport/airport.entity';
 
 @Entity()
@@ -19,5 +25,6 @@ export class AirlineEntity {
   webpage: string;
 
   @ManyToMany(() => AirportEntity, (airport) => airport.airlines)
+  @JoinTable()
   airports: AirportEntity[];
 }

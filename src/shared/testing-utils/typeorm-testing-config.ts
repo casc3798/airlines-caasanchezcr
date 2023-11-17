@@ -1,34 +1,16 @@
 /* eslint-disable prettier/prettier */
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CategoryEntity } from '../../category/category.entity';
-import { CountryEntity } from '../../country/country.entity';
-import { GastronomicCultureEntity } from '../../gastronomic-culture/gastronomic-culture.entity';
-import { IngredientEntity } from '../../ingredient/ingredient.entity';
-import { RecipeEntity } from '../../recipe/recipe.entity';
-import { RestaurantEntity } from '../../restaurant/restaurant.entity';
+import { AirlineEntity } from '../../airline/airline.entity';
+import { AirportEntity } from '../../airport/airport.entity';
 
 export const TypeOrmTestingConfig = () => [
   TypeOrmModule.forRoot({
     type: 'sqlite',
     database: ':memory:',
     dropSchema: true,
-    entities: [
-      CategoryEntity,
-      CountryEntity,
-      GastronomicCultureEntity,
-      IngredientEntity,
-      RecipeEntity,
-      RestaurantEntity,
-    ],
+    entities: [AirlineEntity, AirportEntity],
     synchronize: true,
     keepConnectionAlive: true,
   }),
-  TypeOrmModule.forFeature([
-    CategoryEntity,
-    CountryEntity,
-    GastronomicCultureEntity,
-    IngredientEntity,
-    RecipeEntity,
-    RestaurantEntity,
-  ]),
+  TypeOrmModule.forFeature([AirlineEntity, AirportEntity]),
 ];

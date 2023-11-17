@@ -54,6 +54,12 @@ export class AirportService {
         BusinessError.NOT_FOUND,
       );
 
+    if (airport.code.length > 3)
+      throw new BusinessLogicException(
+        'The airport code must be have at most 3 characters',
+        BusinessError.BAD_REQUEST,
+      );
+
     return await this.airportRepository.save({
       ...persistedAirport,
       ...airport,
