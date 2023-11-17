@@ -7,13 +7,16 @@ import {
   Param,
   Post,
   Put,
+  UseInterceptors,
 } from '@nestjs/common';
 import { AirlineService } from './airline.service';
 import { AirlineDto } from './airline.dto';
 import { AirlineEntity } from './airline.entity';
 import { plainToInstance } from 'class-transformer';
+import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors.interceptor';
 
 @Controller('airlines')
+@UseInterceptors(BusinessErrorsInterceptor)
 export class AirlineController {
   constructor(private readonly airlineService: AirlineService) {}
 
@@ -29,7 +32,11 @@ export class AirlineController {
 
   @Post()
   async create(@Body() airlineDto: AirlineDto) {
-    const airline: AirlineEntity = plainToInstance(AirlineEntity, airlineDto);
+    const parsedAirlineDto = plainToInstance(AirlineDto, airlineDto);
+    const airline: AirlineEntity = plainToInstance(
+      AirlineEntity,
+      parsedAirlineDto,
+    );
     return await this.airlineService.create(airline);
   }
 
@@ -38,7 +45,11 @@ export class AirlineController {
     @Param('airlineId') airlineId: string,
     @Body() airlineDto: AirlineDto,
   ) {
-    const airline: AirlineEntity = plainToInstance(AirlineEntity, airlineDto);
+    const parsedAirlineDto = plainToInstance(AirlineDto, airlineDto);
+    const airline: AirlineEntity = plainToInstance(
+      AirlineEntity,
+      parsedAirlineDto,
+    );
     return await this.airlineService.update(airlineId, airline);
   }
 
