@@ -1,8 +1,8 @@
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Airport } from '../airport/airport.entity';
+import { AirportEntity } from '../airport/airport.entity';
 
 @Entity()
-export class Airline {
+export class AirlineEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -18,6 +18,6 @@ export class Airline {
   @Column()
   webpage: string;
 
-  @ManyToMany(() => Airport, (airport) => airport.airlines)
-  airports: Airport[];
+  @ManyToMany(() => AirportEntity, (airport) => airport.airlines)
+  airports: AirportEntity[];
 }
